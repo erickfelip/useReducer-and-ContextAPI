@@ -8,19 +8,22 @@ import { History } from "./History";
 import { calculateWinner } from "../utils/calculateWinner";
 
 export function Board() {
-  const { squares, setWhoIsWinner, history } = useContext(GameContext);
+  const {
+    state: { squares, history },
+    dispatch,
+  } = useContext(GameContext);
 
   function winner() {
     const player = calculateWinner(squares);
     if (player) {
-      setWhoIsWinner(player);
+      dispatch({ type: "UPDATE_WINNER", payload: player });
     }
     console.log(history);
   }
 
   useEffect(() => {
     winner();
-  }, [setWhoIsWinner, squares]);
+  }, [squares]);
 
   return (
     <div className="board-container">

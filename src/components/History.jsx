@@ -1,24 +1,17 @@
 import React, { useContext } from "react";
 import { GameContext } from "../contexts/GameContext";
-import { v4 as uuid } from "uuid";
 
 export function History() {
   const {
-    squares,
-    history,
-    setHistory,
-    setSquares,
-    setIsXNext,
-    setWhoIsWinner,
+    state: { history },
+    dispatch,
   } = useContext(GameContext);
 
   function handleClick(index) {
-    const newHistory = [...history];
-    newHistory.splice(index, Number.MAX_SAFE_INTEGER);
-    setHistory(newHistory);
-    setSquares(history[index].squares);
-    setIsXNext(history[index].isXNext);
-    setWhoIsWinner(history[index].whoIsWinner);
+    dispatch({
+      type: "UPDATE_HISTORY",
+      payload: [history, index],
+    });
   }
 
   return (

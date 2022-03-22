@@ -3,13 +3,8 @@ import { GameContext } from "../contexts/GameContext";
 
 export function Square({ value, index }) {
   const {
-    squares,
-    setSquares,
-    isXNext,
-    setIsXNext,
-    whoIsWinner,
-    setHistory,
-    history,
+    state: { squares, isXNext, whoIsWinner },
+    dispatch,
   } = useContext(GameContext);
 
   function handleClick() {
@@ -17,16 +12,8 @@ export function Square({ value, index }) {
     if (whoIsWinner) return;
     const newSquares = [...squares];
     newSquares[index] = isXNext ? "X" : "O";
-    setSquares(newSquares);
-    setIsXNext(!isXNext);
-    setHistory([
-      ...history,
-      {
-        squares: newSquares,
-        isXNext: !isXNext,
-        whoIsWinner,
-      },
-    ]);
+    dispatch({ type: "UPDATE_SQUARES", payload: newSquares });
+
   }
 
   return (
